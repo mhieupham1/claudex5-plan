@@ -48,7 +48,7 @@ Kết quả: Chỉ làm được ~3h thực tế (1.5h sáng + 1.5h chiều)
 **Token consumption thực tế:**
 
 ```
-1 session code review với project lớn:
+1 session code với project lớn:
 ├─ System prompt: 12-65K tokens
 ├─ Files gửi kèm (3-5 files): 30-50K tokens
 ├─ Conversation history: 50-80K tokens
@@ -57,9 +57,9 @@ Kết quả: Chỉ làm được ~3h thực tế (1.5h sáng + 1.5h chiều)
    Total: 102-215K tokens/session
 ```
 
-**Nhưng Pro chỉ có:** ~44,000 tokens per 5-hour window [1]
+**Nhưng Pro chỉ có:** ~44,000 tokens per 5-hour window [[1]](https://milvus.io/ai-quick-reference/what-are-the-token-limits-for-claude-code)
 
-**Hệ quả:** 1 session code review = **HẾT 100% limit Pro**
+**Hệ quả:** 1 session code = **HẾT 100% limit Pro**
 
 ---
 
@@ -80,11 +80,11 @@ Cơ chế hoạt động:
 7:00 PM  │ Window thứ 2 reset
 ```
 
-**Nguồn:** [4] Portkey.ai, [5] Usagebar
+**Nguồn:** [[4] Portkey.ai](https://portkey.ai/blog/claude-code-limits/), [[5] Usagebar](https://usagebar.com/blog/when-does-claude-code-usage-reset)
 
 ---
 
-### 2.5 Thông Số Cơ Bản
+### 2.2 "Top of the Hour" Quirk (Làm Tròn Giờ)
 
 **Phát hiện quan trọng:** Claude **làm tròn đến đầu giờ** khi tính reset time.
 
@@ -98,7 +98,7 @@ Ví dụ thực tế (với giờ làm 9:00 AM của bạn):
 → Dù gửi lúc 9:00 hay 9:59, reset vẫn là 2:00 PM
 ```
 
-**Nguồn:** [7] Nathan Onn, [8] RedAirship
+**Nguồn:** [[10] Nathan Onn](https://www.nathanonn.com/how-to-double-your-claude-code-usage-limits-without-upgrading-to-max/), [[11] RedAirship](https://www.redairship.com/insights/strategic-guide-to-maximizing-claude-code)
 
 ---
 
@@ -132,7 +132,7 @@ Option 2: Bắt đầu muộn (9:30 AM - vẫn reset 2:00 PM)
 
 ---
 
-### 2.4 Thông Tin Cơ Bản Về Max 5x
+### 2.7 Timeline Reset Cho Giờ Làm 9:00-17:30
 
 | Thông số | Pro | Max 5x |
 |----------|-----|--------|
@@ -141,22 +141,22 @@ Option 2: Bắt đầu muộn (9:30 AM - vẫn reset 2:00 PM)
 | **Messages/5h** | ~45 | ~225 |
 | **Multiplier** | 1x | 5x messages |
 
-**Nguồn:** [1] Milvus.io, [2] SSD Nodes, [3] Verdent Guides
+**Nguồn:** [[1] Milvus.io](https://milvus.io/ai-quick-reference/what-are-the-token-limits-for-claude-code), [[2] SSD Nodes](https://www.ssdnodes.com/blog/claude-code-pricing-in-2026-every-plan-explained-pro-max-api-teams/), [[3] Verdent Guides](https://www.verdent.ai/guides/how-to-use-claude-ai-for-free-2026)
 
-### 2.6 "5x" Nghĩa Là Gì?
+### 2.5 "5x" Nghĩa Là Gì?
 
 **Marketing:** 5x số messages (45 → 225 messages)
 
 **Thực tế:** Tokens chỉ tăng ~2x (44K → 88K)
 
-**Lý do:** "Weighted message system" [6]
+**Lý do:** "Weighted message system" [[6] TrueFoundry](https://www.truefoundry.com/blog/claude-code-limits-explained)
 - Message ngắn (fresh conversation): ~500 tokens = 1 unit
 - Message dài (context lớn): ~20,000 tokens = 5-8 units
 
-> **Từ Portkey.ai [4]:**
+> **Từ [[4] Portkey.ai](https://portkey.ai/blog/claude-code-limits/):**
 > "A message is weighted by token consumption, not by literal number of prompts"
 
-### 2.7 Tại Sao Max 5x Có Thể Giải Quyết Vấn Đề?
+### 2.4 Thông Tin Cơ Bản Về Max 5x
 
 ```
 Pro (44K tokens/5h):
@@ -173,77 +173,9 @@ Max 20x (220K tokens/5h):
 
 ---
 
-### 6.5 Timeline Reset Cho Giờ Làm 9:00-17:30
+## 3. So Sánh Trực Tiếp: Pro vs Max 5x
 
-**Với giờ làm 9:00-17:30 của bạn:**
-
-```
-Option 1: Bắt đầu sớm (9:00 AM sharp) → TỐI ƯU NHẤT
-
-9:00 AM  │ Window 1 bắt đầu ✅
-         │ Coding session #1 (5 tiếng)
-2:00 PM  │ Window 1 reset → Window 2 bắt đầu ✅
-         │ Coding session #2 (3.5 tiếng)
-5:30 PM  │ Kết thúc workday (vẫn còn session 2)
-
-→ 2 sessions đầy đủ, session 2 dư 1.5 tiếng buffer
-```
-
-```
-Option 2: Bắt đầu 9:30 AM (vẫn reset 2:00 PM)
-
-9:30 AM  │ Window 1 bắt đầu (làm tròn 9:00 AM)
-         │ Coding session #1 (4.5 tiếng)
-2:00 PM  │ Window 1 reset → Window 2 bắt đầu ✅
-         │ Coding session #2 (3.5 tiếng)
-5:30 PM  │ Kết thúc workday
-
-→ Vẫn ok, session 2 dư 1.5 tiếng buffer
-```
-
-```
-Option 3: Bắt đầu 10:00 AM (reset 3:00 PM)
-
-10:00 AM │ Window 1 bắt đầu (làm tròn 10:00 AM)
-         │ Coding session #1 (5 tiếng)
-3:00 PM  │ Window 1 reset → Window 2 bắt đầu
-         │ Coding session #2 (chỉ 2.5 tiếng trước 17:30)
-
-→ Session 2 bị ngắn, nhưng vẫn đủ 2.5h làm việc
-```
-
----
-
-**Khuyến nghị chiến lược:**
-
-```
-Để tối đa hóa 2 sessions trong ngày làm 8.5 tiếng:
-
-9:00 AM  │ Bắt đầu session 1 (càng sớm càng tốt)
-         │ Code review, viết code mới (deep work)
-12:00 PM │ Lunch break ✅
-2:00 PM  │ Reset window → Session 2 bắt đầu
-         │ Debug, research, meetings (lighter work)
-5:30 PM  │ Kết thúc workday (vẫn còn session 2)
-```
-
-**Mẹo tối ưu:**
-- Bắt đầu session 1 lúc **9:00-9:30 AM** → reset lúc **2:00 PM**
-- Nếu bắt đầu sau **10:00 AM** → session 2 chỉ còn 2.5h (vẫn ok)
-- Session 2 kéo dài đến **7:00-8:00 PM** → dư sức finish 17:30
-- **Buffer an toàn:** 1.5-2 tiếng cuối ngày không lo hit limit
-
----
-
-### 6.6 Recommendation Final
-
----
-
-## 4. So Sánh Trực Tiếp: Pro vs Max 5x
-
-### 4.1 Timeline Reset Thực Tế (9 AM - 5:30 PM Workday)
-
-### 4.2 Bảng So Sánh Theo Tác Vụ
+### 3.2 Bảng So Sánh Theo Tác Vụ
 
 #### Code Review (3-5 lần/ngày)
 
@@ -263,7 +195,7 @@ Option 3: Bắt đầu 10:00 AM (reset 3:00 PM)
 | Sessions trước hit | 3-4 | 12-18 |
 | **Kết quả** | ❌ Không đủ 1 feature lớn | ✅ Đủ 2-3 features |
 
-#### Debug (5-8 lần/ngày)
+#### Debug (2-3 lần/ngày)
 
 | Metric | Pro | Max 5x |
 |--------|-----|--------|
@@ -280,7 +212,7 @@ Option 3: Bắt đầu 10:00 AM (reset 3:00 PM)
 | % Limit | 136-227% | 68-114% |
 | **Kết quả** | ❌ Hết limit sau 1 file | ✅ Dịch được 1 file |
 
-### 4.3 Tổng Kết 8 Tiếng Coding
+### 3.4 Tổng Kết 8 Tiếng Coding
 
 | Metric | Pro | Max 5x |
 |--------|-----|--------|
@@ -293,13 +225,13 @@ Option 3: Bắt đầu 10:00 AM (reset 3:00 PM)
 
 ---
 
-## 5. Bằng Chứng Từ Cộng Đồng Internet
+## 4. Bằng Chứng Từ Cộng Đồng Internet
 
-### 5.1 User Reports Trên Reddit & Forums
+### 4.1 User Reports Trên Reddit & Forums
 
 **Case 1: Heavy User**
 > "I used up Max 5 in 1 hour of working, before I could work 8 hours"
-> — Max 5x user ($100/month) [7]
+> — Max 5x user ($100/month) [[7] BBC](https://www.bbc.com/news/articles/ce8l2q5yq51o)
 
 **Phân tích:** Nếu Max 5x (88K tokens) hết trong 1 giờ → User này cần ~700K+ tokens/8h → **Max 20x mới đủ**
 
@@ -307,7 +239,7 @@ Option 3: Bắt đầu 10:00 AM (reset 3:00 PM)
 
 **Case 2: Pro Subscriber**
 > "It's maxed out every Monday and resets at Saturday... out of 30 days I get to use Claude 12"
-> — Pro subscriber [7]
+> — Pro subscriber [[7] BBC](https://www.bbc.com/news/articles/ce8l2q5yq51o)
 
 **Phân tích:** 30 ngày chỉ dùng được 12 ngày → **60% thời gian không dùng được**
 
@@ -315,36 +247,36 @@ Option 3: Bắt đầu 10:00 AM (reset 3:00 PM)
 
 **Case 3: Refactoring Session**
 > "4 hours of usage gone in 3 prompts. Used plan mode to refactor a frontend architecture."
-> — Developer on Reddit [7]
+> — Developer on Reddit [[7] BBC](https://www.bbc.com/news/articles/ce8l2q5yq51o)
 
 **Phân tích:** 3 prompts = hết 4 hours usage → **1 prompt = 1.3 hours limit của Pro**
 
 ---
 
-### 5.2 Media Coverage (2026)
+### 4.2 Media Coverage (2026)
 
 | Nguồn | Tiêu đề | Nội dung chính |
 |-------|---------|----------------|
-| **BBC News** [7] | "Claude Code users hitting usage limits 'way faster than expected'" | Anthropic admits fixing problems |
-| **DevClass** [8] | "Anthropic admits Claude Code users hitting usage limits" | Less than 5% affected |
+| **[[7] BBC News](https://www.bbc.com/news/articles/ce8l2q5yq51o)** | "Claude Code users hitting usage limits 'way faster than expected'" | Anthropic admits fixing problems |
+| **[[8] DevClass](https://www.devclass.com/ai-ml/2026/04/01/anthropic-admits-claude-code-users-hitting-usage-limits-way-faster-than-expected/5213575)** | "Anthropic admits Claude Code users hitting usage limits" | Less than 5% affected |
 | **The New Stack** | "Claude Code users say they're hitting usage limits faster than normal" | Community reports |
 
 ---
 
-### 5.3 Common Complaints Từ Community
+### 4.3 Common Complaints Từ Community
 
 | Complaint | % Users Report | Source |
 |-----------|----------------|--------|
-| Hit limit 2+ times/week | 60-70% | [7][8] |
-| Mid-session interrupts | 50-60% | [7] |
-| Can't finish refactor | 40-50% | [7] |
-| Wake up early to reset | 20-30% | [7] |
+| Hit limit 2+ times/week | 60-70% | [[7] BBC](https://www.bbc.com/news/articles/ce8l2q5yq51o), [[8] DevClass](https://www.devclass.com/ai-ml/2026/04/01/anthropic-admits-claude-code-users-hitting-usage-limits-way-faster-than-expected/5213575) |
+| Mid-session interrupts | 50-60% | [[7] BBC](https://www.bbc.com/news/articles/ce8l2q5yq51o) |
+| Can't finish refactor | 40-50% | [[7] BBC](https://www.bbc.com/news/articles/ce8l2q5yq51o) |
+| Wake up early to reset | 20-30% | [[7] BBC](https://www.bbc.com/news/articles/ce8l2q5yq51o) |
 
 ---
 
-## 6. Kết Luận & Recommendation
+## 5. Kết Luận & Recommendation
 
-### 6.1 Tóm Tắt Hành Trình
+### 5.1 Tóm Tắt Hành Trình
 
 ```
 Pro User ($20)
@@ -360,21 +292,21 @@ Case thực tế + Internet reports
 Kết luận
 ```
 
-### 6.2 Khi Nào Chọn Pro:
+### 5.3 Khi Nào Chọn Pro:
 
 - Dùng < 2h/ngày
 - Project nhỏ (< 500K tokens)
 - Không dịch file lớn
 - Accept 3-5 lần chờ/ngày
 
-### 6.3 Khi Nào Chọn Max 5x:
+### 5.4 Khi Nào Chọn Max 5x:
 
 - Dùng 4-8h/ngày ✅ **(Case của bạn)**
 - Project 1-2M+ tokens ✅ **(Case của bạn)**
 - Dịch file 1000-5000 dòng ✅ **(Case của bạn)**
 - Cần 70-80% productivity ✅ **(Case của bạn)**
 
-### 6.4 Recommendation Final
+### 5.5 Recommendation Final
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -387,10 +319,10 @@ Kết luận
 │  → MAX 5x ($100/tháng) = SWEET SPOT               │
 │                                                     │
 │  BY CHỨNG TỪ 11+ SOURCES:                         │
-│  [1] Milvus.io, [2] SSD Nodes, [3] Verdent       │
-│  [4] Portkey, [5] Claude Help Center, [6] TrueFoundry │
-│  [7] BBC, [8] DevClass, [9] like2byte.com        │
-│  [10] Nathan Onn, [11] RedAirship                │
+│  [[1] Milvus.io](https://milvus.io/ai-quick-reference/what-are-the-token-limits-for-claude-code), [[2] SSD Nodes](https://www.ssdnodes.com/blog/claude-code-pricing-in-2026-every-plan-explained-pro-max-api-teams/), [[3] Verdent](https://www.verdent.ai/guides/how-to-use-claude-ai-for-free-2026)       │
+│  [[4] Portkey](https://portkey.ai/blog/claude-code-limits/), [[5] Claude Help Center](https://support.claude.com/en/articles/11647753-how-do-usage-and-length-limits-work), [[6] TrueFoundry](https://www.truefoundry.com/blog/claude-code-limits-explained) │
+│  [[7] BBC](https://www.bbc.com/news/articles/ce8l2q5yq51o), [[8] DevClass](https://www.devclass.com/ai-ml/2026/04/01/anthropic-admits-claude-code-users-hitting-usage-limits-way-faster-than-expected/5213575), [[9] like2byte.com](https://like2byte.com/claude-max-vs-pro-coding-limits/)        │
+│  [[10] Nathan Onn](https://www.nathanonn.com/how-to-double-your-claude-code-usage-limits-without-upgrading-to-max/), [[11] RedAirship](https://www.redairship.com/insights/strategic-guide-to-maximizing-claude-code)                │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -400,17 +332,17 @@ Kết luận
 
 | # | Nguồn | Link |
 |---|-------|------|
-| [1] | Milvus.io - Token limits | https://milvus.io/ai-quick-reference/what-are-the-token-limits-for-claude-code |
-| [2] | SSD Nodes - Pricing 2026 | https://www.ssdnodes.com/blog/claude-code-pricing-in-2026-every-plan-explained-pro-max-api-teams/ |
-| [3] | Verdent Guides - Free usage | https://www.verdent.ai/guides/how-to-use-claude-ai-for-free-2026 |
-| [4] | Portkey.ai - Code limits | https://portkey.ai/blog/claude-code-limits/ |
-| [5] | Claude Help Center | https://support.claude.com/en/articles/11647753-how-do-usage-and-length-limits-work |
-| [6] | TrueFoundry - Limits explained | https://www.truefoundry.com/blog/claude-code-limits-explained |
-| [7] | BBC News - Usage limits report | https://www.bbc.com/news/articles/ce8l2q5yq51o |
-| [8] | DevClass - Anthropic admits | https://www.devclass.com/ai-ml/2026/04/01/anthropic-admits-claude-code-users-hitting-usage-limits-way-faster-than-expected/5213575 |
-| [9] | like2byte.com - Max vs Pro | https://like2byte.com/claude-max-vs-pro-coding-limits/ | Flow loss analysis |
-| [10] | Nathan Onn - Double usage limits | https://www.nathanonn.com/how-to-double-your-claude-code-usage-limits-without-upgrading-to-max/ | 5-hour window rounding |
-| [11] | RedAirship - Strategic guide | https://www.redairship.com/insights/strategic-guide-to-maximizing-claude-code | Top of the hour quirk |
+| [[1]](https://milvus.io/ai-quick-reference/what-are-the-token-limits-for-claude-code) | Milvus.io - Token limits | https://milvus.io/ai-quick-reference/what-are-the-token-limits-for-claude-code |
+| [[2]](https://www.ssdnodes.com/blog/claude-code-pricing-in-2026-every-plan-explained-pro-max-api-teams/) | SSD Nodes - Pricing 2026 | https://www.ssdnodes.com/blog/claude-code-pricing-in-2026-every-plan-explained-pro-max-api-teams/ |
+| [[3]](https://www.verdent.ai/guides/how-to-use-claude-ai-for-free-2026) | Verdent Guides - Free usage | https://www.verdent.ai/guides/how-to-use-claude-ai-for-free-2026 |
+| [[4]](https://portkey.ai/blog/claude-code-limits/) | Portkey.ai - Code limits | https://portkey.ai/blog/claude-code-limits/ |
+| [[5]](https://support.claude.com/en/articles/11647753-how-do-usage-and-length-limits-work) | Claude Help Center | https://support.claude.com/en/articles/11647753-how-do-usage-and-length-limits-work |
+| [[6]](https://www.truefoundry.com/blog/claude-code-limits-explained) | TrueFoundry - Limits explained | https://www.truefoundry.com/blog/claude-code-limits-explained |
+| [[7]](https://www.bbc.com/news/articles/ce8l2q5yq51o) | BBC News - Usage limits report | https://www.bbc.com/news/articles/ce8l2q5yq51o |
+| [[8]](https://www.devclass.com/ai-ml/2026/04/01/anthropic-admits-claude-code-users-hitting-usage-limits-way-faster-than-expected/5213575) | DevClass - Anthropic admits | https://www.devclass.com/ai-ml/2026/04/01/anthropic-admits-claude-code-users-hitting-usage-limits-way-faster-than-expected/5213575 |
+| [[9]](https://like2byte.com/claude-max-vs-pro-coding-limits/) | like2byte.com - Max vs Pro | https://like2byte.com/claude-max-vs-pro-coding-limits/ | Flow loss analysis |
+| [[10]](https://www.nathanonn.com/how-to-double-your-claude-code-usage-limits-without-upgrading-to-max/) | Nathan Onn - Double usage limits | https://www.nathanonn.com/how-to-double-your-claude-code-usage-limits-without-upgrading-to-max/ | 5-hour window rounding |
+| [[11]](https://www.redairship.com/insights/strategic-guide-to-maximizing-claude-code) | RedAirship - Strategic guide | https://www.redairship.com/insights/strategic-guide-to-maximizing-claude-code | Top of the hour quirk |
 
 ---
 
