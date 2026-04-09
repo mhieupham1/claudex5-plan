@@ -281,7 +281,7 @@ Max 20x (220K tokens/5h):
 ```
 Pro User ($20)
     ↓
-Gặp vấn đề: Hit limit 3-5 lần/ngày
+Gặp vấn đề: Hit limit 2 lần/ngày
     ↓
 Tìm hiểu Max 5x ($100)
     ↓
@@ -297,14 +297,14 @@ Kết luận
 - Dùng < 2h/ngày
 - Project nhỏ (< 500K tokens)
 - Không dịch file lớn
-- Accept 3-5 lần chờ/ngày
+- Accept 2 lần chờ/ngày
 
 ### 5.4 Khi Nào Chọn Max 5x:
 
-- Dùng 4-8h/ngày ✅ **(Case của bạn)**
-- Project 1-2M+ tokens ✅ **(Case của bạn)**
-- Dịch file 1000-5000 dòng ✅ **(Case của bạn)**
-- Cần 70-80% productivity ✅ **(Case của bạn)**
+- Dùng 4-8h/ngày ✅ 
+- Project 1-2M+ tokens ✅ 
+- Dịch file 1000-5000 dòng ✅ 
+- Cần 70-80% productivity ✅ 
 
 ### 5.5 Recommendation Final
 
